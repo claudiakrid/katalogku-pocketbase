@@ -60,3 +60,17 @@ Authorization: Bearer {{token}}
 ### 9. Hapus favorit pertama
 DELETE {{baseUrl}}/favorites/{{favs.response.body.$.items[0].id}}
 Authorization: Bearer {{token}}
+
+### 10. Daftar review
+GET {{baseUrl}}/reviews
+
+### 11. Tambah review
+POST {{baseUrl}}/reviews
+Content-Type: application/json
+
+{
+  "product_id": "{{productId}}",
+  "reviewer": "budi@itb.ac.id",
+  "rating": 5,
+  "comment": "Kopinya enak"
+}
