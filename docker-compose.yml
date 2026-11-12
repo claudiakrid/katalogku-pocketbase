@@ -1,6 +1,7 @@
 volumes:
   product_data:   # database & file milik product-service
   account_data:   # database & file milik account-service
+  review_data:          # tambahan
 
 services:
   product-service:          # PocketBase #1: koleksi products
@@ -19,6 +20,14 @@ services:
     ports:
       - "8092:8090"         # dashboard: http://IP_SERVER:8092/_/
 
+  review-service:       # PocketBase #3: rating & komentar
+    build: ./pocketbase
+    restart: unless-stopped
+    volumes:
+      - review_data:/pb_data
+    ports:
+      - "8093:8090"     # dashboard: http://IP_SERVER:8093/_/
+
   gateway:                  # satu pintu masuk API
     image: nginx:1.28-alpine
     restart: unless-stopped
@@ -29,7 +38,7 @@ services:
     depends_on:
       - product-service
       - account-service
-
+      - review-service
   tunnel:                   # opsional: Cloudflare Tunnel
     image: cloudflare/cloudflared:latest
     restart: unless-stopped
